@@ -41,6 +41,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mighty.airtelapp.apirequest.APIRequest;
 import com.example.mighty.airtelapp.Service.EmailMessage;
 import com.example.mighty.airtelapp.Service.NotificationClass;
 import com.example.mighty.airtelapp.Service.QueryService;
@@ -631,6 +632,11 @@ public class CreateUser extends AppCompatActivity {
             case R.id.contact_network:
                 contactNetwork();
                 Toast.makeText(this, "Contacting network", Toast.LENGTH_SHORT ).show();
+                return true;
+
+            case R.id.log_data:
+                startActivity(new Intent(CreateUser.this, APIRequest.class));
+                Toast.makeText(this, "Fetching data", Toast.LENGTH_SHORT ).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);

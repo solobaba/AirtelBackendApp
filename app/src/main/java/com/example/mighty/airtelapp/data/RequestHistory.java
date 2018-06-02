@@ -8,6 +8,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.GridView;
@@ -20,6 +22,7 @@ public class RequestHistory extends AppCompatActivity implements LoaderManager.L
 
     private static final int REQUEST_LOADER = 1;
     RequestCursorAdapter requestCursorAdapter;
+    RecyclerView recyclerView;
 
     Toolbar mtoolbar;
 
@@ -39,8 +42,15 @@ public class RequestHistory extends AppCompatActivity implements LoaderManager.L
             }
         });
 
+//        recyclerView = (RecyclerView) findViewById(R.id.request_list);
+//        int columnNumbers = 3;
+////        requestCursorAdapter = new RequestCursorAdapter(this, null);
+//        recyclerView.setLayoutManager(new GridLayoutManager(this, columnNumbers));
+
+
         GridView listView = (GridView) findViewById(R.id.request_list);
-        requestCursorAdapter = new RequestCursorAdapter(this, null);
+        int columnNumbers = 2;
+        requestCursorAdapter = new RequestCursorAdapter(this, null, columnNumbers);
         listView.setAdapter(requestCursorAdapter);
         getLoaderManager().initLoader(REQUEST_LOADER, null, this);
     }

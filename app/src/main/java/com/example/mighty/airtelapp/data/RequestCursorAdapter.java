@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.example.mighty.airtelapp.R;
 import com.example.mighty.airtelapp.data.DataContract.DataEntry;
 
-class RequestCursorAdapter extends CursorAdapter {
-    public RequestCursorAdapter(Context context, Cursor cursor) {
+public class RequestCursorAdapter extends CursorAdapter {
+    public RequestCursorAdapter(Context context, Cursor cursor, int columnNumbers) {
         super(context, cursor, 0);
     }
 
@@ -57,4 +57,5 @@ class RequestCursorAdapter extends CursorAdapter {
         timeReceivedTextView.setText(timeReceived);
         timeDoneTextView.setText(timeDone);
     }
+
 }

@@ -4,8 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".CreateUser">
 
     <!--<android.support.v7.widget.Toolbar-->
@@ -18,52 +19,61 @@
         <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light">-->
     <!--</android.support.v7.widget.Toolbar>-->
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp"
-        android:orientation="vertical">
     <TextView
         android:id="@+id/recipient_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/recipient_number"/>
+        android:text="@string/recipient_number"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="#2B3D4D"
+        android:fontFamily="sans-serif-medium"/>
 
     <TextView
         android:id="@+id/data_bundle_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/data_bundle_name"/>
+        android:text="@string/data_bundle_name"
+        android:textColor="#AEB6BD"
+        android:fontFamily="sans-serif"/>
 
     <TextView
         android:id="@+id/data_bundle_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/data_bundle_value"/>
+        android:text="@string/data_bundle_value"
+        android:textColor="#AEB6BD"
+        android:fontFamily="sans-serif"/>
 
     <TextView
         android:id="@+id/data_bundle_cost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/data_bundle_cost"/>
+        android:text="@string/data_bundle_cost"
+        android:textColor="#AEB6BD"
+        android:fontFamily="sans-serif"/>
 
     <TextView
         android:id="@+id/resource_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/request_source"/>
+        android:text="@string/request_source"
+        android:textColor="#AEB6BD"
+        android:fontFamily="sans-serif"/>
 
     <TextView
         android:id="@+id/time_received"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/time_received"/>
+        android:text="@string/time_received"
+        android:textColor="#AEB6BD"
+        android:fontFamily="sans-serif"/>
 
     <TextView
         android:id="@+id/time_done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/time_done"/>
-    </GridLayout>
+        android:text="@string/time_done"
+        android:textColor="#AEB6BD"
+        android:fontFamily="sans-serif"/>
 
 </LinearLayout>

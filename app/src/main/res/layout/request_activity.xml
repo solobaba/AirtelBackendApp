@@ -19,6 +19,13 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
     </android.support.v7.widget.Toolbar>
 
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/request_list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="16dp">-->
+    <!--</android.support.v7.widget.RecyclerView>-->
+
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
