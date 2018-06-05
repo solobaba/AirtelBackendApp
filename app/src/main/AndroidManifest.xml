@@ -26,7 +26,7 @@
         </activity>
 
         <activity
-            android:name=".Service.NotificationClass">
+            android:name=".service.NotificationClass">
             android:label="@string/app_name"
             <intent-filter>
                 <action android:name="notification_filter"/>
@@ -43,7 +43,7 @@
             android:name=".data.DataProvider"
             android:exported="false"/>
 
-        <service android:name=".Service.USSDService"
+        <service android:name=".service.USSDService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
@@ -52,7 +52,7 @@
                 android:resource="@xml/config_service" />
         </service>
 
-        <service android:name=".Service.QueryService"
+        <service android:name=".service.QueryService"
             android:exported="false"/>
 
         <receiver android:name=".CreateUser$Receiver"

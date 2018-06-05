@@ -1,4 +1,4 @@
-package com.example.mighty.airtelapp.Service;
+package com.example.mighty.airtelapp.service;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

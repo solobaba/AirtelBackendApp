@@ -1,4 +1,4 @@
-package com.example.mighty.airtelapp.Service;
+package com.example.mighty.airtelapp.service;
 
 import android.app.IntentService;
 import android.content.Intent;

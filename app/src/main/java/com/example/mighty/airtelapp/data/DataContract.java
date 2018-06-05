@@ -16,8 +16,9 @@ public class DataContract {
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_LOG);
 
         // Table and column names
-        public final static String TABLE_NAME = "airdat";
+        public final static String TABLE_NAME = "datair";
         public final static String COLUMN_NAME_ID = BaseColumns._ID;
+        public final static String COLUMN_ORDER_NUMBER = "ordId";
         public final static String COLUMN_RECIPIENT_NUMBER = "recNum";
         public final static String COLUMN_DATA_BUNDLE_NAME = "dataName";
         public final static String COLUMN_DATA_BUNDLE_VALUE = "dataValue";

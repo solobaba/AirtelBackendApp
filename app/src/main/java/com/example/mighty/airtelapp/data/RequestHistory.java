@@ -20,7 +20,7 @@ import com.example.mighty.airtelapp.data.DataContract.DataEntry;
 
 public class RequestHistory extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
-    private static final int REQUEST_LOADER = 1;
+    private static final int REQUEST_LOADER = 0;
     RequestCursorAdapter requestCursorAdapter;
     RecyclerView recyclerView;
 
@@ -65,6 +65,7 @@ public class RequestHistory extends AppCompatActivity implements LoaderManager.L
         //Define a projection to show relevant columns
         String[] projection = {
                 DataEntry._ID,
+                DataEntry.COLUMN_ORDER_NUMBER,
                 DataEntry.COLUMN_RECIPIENT_NUMBER,
                 DataEntry.COLUMN_DATA_BUNDLE_NAME,
                 DataEntry.COLUMN_DATA_BUNDLE_VALUE,

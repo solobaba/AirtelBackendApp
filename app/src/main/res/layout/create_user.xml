@@ -51,6 +51,14 @@
             android:paddingLeft="4dp">
 
             <EditText
+                android:id="@+id/order_number"
+                style="@style/OverviewFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/order_number"
+                android:inputType="number" />
+
+            <EditText
                 android:id="@+id/recipient_number"
                 style="@style/OverviewFieldStyle"
                 android:layout_width="match_parent"
@@ -128,7 +136,7 @@
                 android:hint="@string/data_bundle_cost"
                 android:inputType="number" />
 
-            <!-- Units for weight (kg) -->
+            <!-- Units for cost (naira) -->
             <TextView
                 android:id="@+id/label_weight_units"
                 style="@style/EditorUnitsStyle"

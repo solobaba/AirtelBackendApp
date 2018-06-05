@@ -11,6 +11,7 @@
     <string name="action_log">Log</string>
 
     <!--Data requesting details… -->
+    <string name="order_number">Order Number</string>
     <string name="recipient_number">Recipient Number</string>
     <string name="data_bundle_value">Data Bundle Value</string>
     <string name="data_bundle_name">Data Bundle Name</string>
@@ -41,9 +42,9 @@
     <string name="data_balance">Data Balance</string>
 
     <!--menu details-->
-    <string name="request_sent">Request Sent</string>
+    <string name="request_sent">Data Sent Request</string>
     <string name="check_balance_request">Check Balance Request</string>
-    <string name="log_data">Log</string>
+    <string name="log_data">API Request Log</string>
     <string name="contact_network">Contact Network</string>
 
     <!--notification message-->

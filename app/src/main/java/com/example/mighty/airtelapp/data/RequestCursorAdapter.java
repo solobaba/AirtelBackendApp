@@ -25,6 +25,7 @@ public class RequestCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
 
         //Extract views to modify
+        TextView orderNumberTextView = (TextView) view.findViewById(R.id.order_number);
         TextView recipientNumberTextView = (TextView) view.findViewById(R.id.recipient_number);
         TextView dataBundleNameTextView = (TextView) view.findViewById(R.id.data_bundle_name);
         TextView dataBundleValueTextView = (TextView) view.findViewById(R.id.data_bundle_value);
@@ -33,6 +34,7 @@ public class RequestCursorAdapter extends CursorAdapter {
         TextView timeReceivedTextView = (TextView) view.findViewById(R.id.time_received);
         TextView timeDoneTextView = (TextView) view.findViewById(R.id.time_done);
 
+        int orderNumberColumnIndex = cursor.getColumnIndex(DataEntry.COLUMN_ORDER_NUMBER);
         int recipientColumnIndex = cursor.getColumnIndex(DataEntry.COLUMN_RECIPIENT_NUMBER);
         int dataBundleNameColumnIndex = cursor.getColumnIndex(DataEntry.COLUMN_DATA_BUNDLE_NAME);
         int dataBundleValueColumnIndex = cursor.getColumnIndex(DataEntry.COLUMN_DATA_BUNDLE_VALUE);
@@ -41,6 +43,7 @@ public class RequestCursorAdapter extends CursorAdapter {
         int timeReceivedColumnIndex = cursor.getColumnIndex(DataEntry.COLUMN_TIME_RECEIVED);
         int timeDoneColumnIndex = cursor.getColumnIndex(DataEntry.COLUMN_TIME_RECEIVED);
 
+        String orderNumber = cursor.getString(orderNumberColumnIndex);
         String recipientNumber = cursor.getString(recipientColumnIndex);
         String dataBundleName = cursor.getString(dataBundleNameColumnIndex);
         String dataBundleValue = cursor.getString(dataBundleValueColumnIndex);
@@ -49,6 +52,7 @@ public class RequestCursorAdapter extends CursorAdapter {
         String timeReceived = cursor.getString(timeReceivedColumnIndex);
         String timeDone = cursor.getString(timeDoneColumnIndex);
 
+        orderNumberTextView.setText(orderNumber);
         recipientNumberTextView.setText(recipientNumber);
         dataBundleNameTextView.setText(dataBundleName);
         dataBundleValueTextView.setText(dataBundleValue);

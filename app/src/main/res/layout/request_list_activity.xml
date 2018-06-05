@@ -20,13 +20,21 @@
     <!--</android.support.v7.widget.Toolbar>-->
 
     <TextView
+        android:id="@+id/order_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/order_number"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="#2B3D4D"
+        android:fontFamily="sans-serif-medium"/>
+
+    <TextView
         android:id="@+id/recipient_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/recipient_number"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="#2B3D4D"
-        android:fontFamily="sans-serif-medium"/>
+        android:textColor="#AEB6BD"
+        android:fontFamily="sans-serif"/>
 
     <TextView
         android:id="@+id/data_bundle_name"

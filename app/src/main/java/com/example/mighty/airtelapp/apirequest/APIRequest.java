@@ -1,23 +1,18 @@
 package com.example.mighty.airtelapp.apirequest;
 
-import android.app.LoaderManager;
 import android.content.Intent;
-import android.content.Loader;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.mighty.airtelapp.CreateUser;
 import com.example.mighty.airtelapp.R;
-import com.example.mighty.airtelapp.data.RequestCursorAdapter;
 import com.example.mighty.airtelapp.model.APImodel;
 import com.example.mighty.airtelapp.model.Feed;
 
@@ -32,6 +27,7 @@ public class APIRequest extends AppCompatActivity{
     private static final String TAG = APIRequest.class.getSimpleName();
 
     Toolbar mtoolbar;
+    Handler mHandler;
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -39,6 +35,7 @@ public class APIRequest extends AppCompatActivity{
 
     private APIInterface apiInterface;
     private ArrayList<APImodel> dataList = new ArrayList<>();
+    private APImodel dataModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +57,30 @@ public class APIRequest extends AppCompatActivity{
         int columnNumbers = 3;
         recyclerView.setLayoutManager(new GridLayoutManager(this, columnNumbers));
 
+        //Method for fetching data from API
+        clickApiItem();
+
+        //Timer for getting data from API
+//        mHandler = new Handler();
+//        mHandler.postDelayed(runnable, 1200000);
+
+    }
+
+//    private Runnable runnable = new Runnable () {
+//        @Override
+//        public void run() {
+//            //Check data balance
+//            clickApiItem();
+//            //Track data balance
+//            mHandler.postDelayed(this, 1200000);
+//        }
+//    };
+
+    private void backToMain() {
+        startActivity(new Intent(this, CreateUser.class));
+    }
+
+    public void clickApiItem(){
         apiInterface = APIClient.getAPIClient().create(APIInterface.class);
 
         Call<Feed> call = apiInterface.getData();
@@ -70,8 +91,18 @@ public class APIRequest extends AppCompatActivity{
                 Log.i("api", "onResponse: Received information: " + response.body().toString());
 
                 dataList = response.body().getData();
-                adapter = new APIRecyclerAdapter(dataList);
+                adapter = new APIRecyclerAdapter(dataList, APIRequest.this);
                 recyclerView.setAdapter(adapter);
+
+                for (int i = 0; i<dataList.size(); i++){
+                    Log.i("api", "onResponse: \n" +
+                    "orderId: " + dataList.get(i).getOrderId() + "\n" +
+                    "phoneNo: " + dataList.get(i).getPhoneNo() + "\n" +
+                    "quantity: " + dataList.get(i).getQuantity() + "\n" +
+                    "network: " + dataList.get(i).getNetwork() + "\n" +
+                    "status: " + dataList.get(i).getStatus() + "\n" +
+                    "statusCode : " + dataList.get(i).getStatusCode());
+                }
             }
 
             @Override
@@ -82,7 +113,4 @@ public class APIRequest extends AppCompatActivity{
         });
     }
 
-    private void backToMain() {
-        startActivity(new Intent(this, CreateUser.class));
-    }
 }

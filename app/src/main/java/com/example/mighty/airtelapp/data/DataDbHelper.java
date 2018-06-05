@@ -9,10 +9,10 @@ import com.example.mighty.airtelapp.data.DataContract.DataEntry;
 public class DataDbHelper extends SQLiteOpenHelper {
 
     //Database name
-    private static final String DATABASE_NAME = "users.db";
+    private static final String DATABASE_NAME = "delta.db";
 
     // Database version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // constructor of the db helper
     public DataDbHelper(Context context){
@@ -21,17 +21,18 @@ public class DataDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String SQL_CREATE_AIRDAT_TABLE = "CREATE TABLE " + DataEntry.TABLE_NAME +  "("+
+        String SQL_CREATE_DATAIR_TABLE = "CREATE TABLE " + DataEntry.TABLE_NAME + "("+
                 DataEntry.COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
-                DataEntry.COLUMN_RECIPIENT_NUMBER + " TEXT , " +
-                DataEntry.COLUMN_DATA_BUNDLE_NAME + " TEXT , " +
-                DataEntry.COLUMN_DATA_BUNDLE_VALUE + " TEXT , " +
-                DataEntry.COLUMN_DATA_BUNDLE_COST + " TEXT , " +
-                DataEntry.COLUMN_SPINNER_ROW + " TEXT , " +
-                DataEntry.COLUMN_TIME_RECEIVED + " NUMERIC , " +
-                DataEntry.COLUMN_STATUS + " TEXT , " +
+                DataEntry.COLUMN_ORDER_NUMBER + " TEXT , " +
+                DataEntry.COLUMN_RECIPIENT_NUMBER + " TEXT, " +
+                DataEntry.COLUMN_DATA_BUNDLE_NAME + " TEXT, " +
+                DataEntry.COLUMN_DATA_BUNDLE_VALUE + " TEXT, " +
+                DataEntry.COLUMN_DATA_BUNDLE_COST + " TEXT, " +
+                DataEntry.COLUMN_SPINNER_ROW + " TEXT, " +
+                DataEntry.COLUMN_TIME_RECEIVED + " NUMERIC, " +
+                DataEntry.COLUMN_STATUS + " TEXT, " +
                 DataEntry.COLUMN_TIME_DONE + " NUMERIC " + ");";
-        db.execSQL(SQL_CREATE_AIRDAT_TABLE);
+        db.execSQL(SQL_CREATE_DATAIR_TABLE);
     }
 
     @Override
