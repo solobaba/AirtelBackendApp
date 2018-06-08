@@ -8,11 +8,11 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.GridView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import com.example.mighty.airtelapp.CreateUser;
 import com.example.mighty.airtelapp.R;
@@ -22,42 +22,62 @@ public class RequestHistory extends AppCompatActivity implements LoaderManager.L
 
     private static final int REQUEST_LOADER = 0;
     RequestCursorAdapter requestCursorAdapter;
-    RecyclerView recyclerView;
+    ListView listView;
 
     Toolbar mtoolbar;
+
+    private Button buttonRemove;
+    private EditText editTextRemove;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.request_activity);
 
-        mtoolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mtoolbar);
-        mtoolbar.setTitle("Request History");
-        mtoolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        mtoolbar.setOnClickListener (new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backToMain();
-            }
-        });
+        getSupportActionBar().setTitle("API_Request");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        recyclerView = (RecyclerView) findViewById(R.id.request_list);
-//        int columnNumbers = 3;
-////        requestCursorAdapter = new RequestCursorAdapter(this, null);
-//        recyclerView.setLayoutManager(new GridLayoutManager(this, columnNumbers));
+//        mtoolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(mtoolbar);
+//        mtoolbar.setTitle("Request History");
+//        mtoolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+//        mtoolbar.setOnClickListener (new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                backToMain();
+//            }
+//        });
 
 
-        GridView listView = (GridView) findViewById(R.id.request_list);
+        listView = (ListView) findViewById(R.id.recyclerView);
         int columnNumbers = 2;
         requestCursorAdapter = new RequestCursorAdapter(this, null, columnNumbers);
         listView.setAdapter(requestCursorAdapter);
         getLoaderManager().initLoader(REQUEST_LOADER, null, this);
+
+        editTextRemove = findViewById(R.id.edittext_remove);
+        buttonRemove = findViewById(R.id.button_remove);
+        buttonRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = Integer.parseInt(editTextRemove.getText().toString());
+                removeItem(position);
+            }
+        });
+
+//        GridView listView = (GridView) findViewById(R.id.request_list);
+//        int columnNumbers = 2;
+//        requestCursorAdapter = new RequestCursorAdapter(this, null, columnNumbers);
+//        listView.setAdapter(requestCursorAdapter);
+//        getLoaderManager().initLoader(REQUEST_LOADER, null, this);
     }
 
-    private void backToMain() {
-        startActivity(new Intent(this, CreateUser.class));
+    public void removeItem(int position){
     }
+
+//    private void backToMain() {
+//        startActivity(new Intent(this, CreateUser.class));
+//    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

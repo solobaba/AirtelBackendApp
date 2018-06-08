@@ -8,15 +8,15 @@
     android:orientation="vertical"
     tools:context=".apirequest.APIRequest">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-    </android.support.v7.widget.Toolbar>
+    <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="?attr/colorPrimary"-->
+        <!--android:minHeight="?attr/actionBarSize"-->
+        <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+        <!--app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">-->
+    <!--</android.support.v7.widget.Toolbar>-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -24,5 +24,50 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
     </android.support.v7.widget.RecyclerView>
+
+    <!--<ProgressBar-->
+        <!--android:id="@+id/progress_bar"-->
+        <!--android:layout_width="150dp"-->
+        <!--android:layout_height="150dp"-->
+        <!--style="?android:progressBarStyleLarge"-->
+        <!--android:progress="80"-->
+        <!--android:progressDrawable="@drawable/circle"-->
+        <!--android:layout_gravity="center_horizontal"/>-->
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_gravity="center">-->
+
+        <!--<io.netopen.hotbitmapgg.library.view.RingProgressBar-->
+            <!--android:id="@+id/progress_bar_1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:max="100"-->
+            <!--app:ringColor="@color/colorPrimary"-->
+            <!--app:ringProgressColor="@color/colorPrimaryDark"-->
+            <!--app:ringWidth="5dp"-->
+            <!--app:style="FILL"-->
+            <!--app:textColor="@color/colorPrimary"-->
+            <!--app:textIsShow="true"-->
+            <!--app:textSize="16sp"/>-->
+
+        <!--<io.netopen.hotbitmapgg.library.view.RingProgressBar-->
+            <!--android:id="@+id/progress_bar_2"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:max="100"-->
+            <!--app:ringColor="@color/colorPrimaryDark"-->
+            <!--app:ringProgressColor="@color/colorPrimaryDark"-->
+            <!--app:ringWidth="5dp"-->
+            <!--app:style="STROKE"-->
+            <!--app:textColor="@color/colorPrimary"-->
+            <!--app:textIsShow="true"-->
+            <!--app:textSize="16sp"/>-->
+
+    <!--</LinearLayout>-->
+
+
 
 </LinearLayout>

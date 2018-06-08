@@ -16,33 +16,21 @@ public class MainActivity extends AppCompatActivity {
 
     Toolbar mtoolbar;
 
-//    RecyclerView recyclerView;
-//    //Adapter
-//    List<User> userList;
-//    UserAdapter adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mtoolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mtoolbar);
-        mtoolbar.setTitle("Request History");
-//        mtoolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        mtoolbar.setOnClickListener (new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                backToMain();
-            }
-        });
-
-//        recyclerView = findViewById(R.id.recycler_view);
-//        adapter = new UserAdapter(this, mInflater);
-//        recyclerView.setAdapter(adapter);
-//        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        recyclerView.setLayoutManager(layoutManager);
+//        mtoolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(mtoolbar);
+//        mtoolbar.setTitle("Request History");
+////        mtoolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+//        mtoolbar.setOnClickListener (new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                backToMain();
+//            }
+//        });
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

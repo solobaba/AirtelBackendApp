@@ -114,16 +114,19 @@ public class CreateUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_user);
 
-        mtoolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mtoolbar);
-        mtoolbar.setTitle("AirtelApp");
-        mtoolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        mtoolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backToMain();
-            }
-        });
+        getSupportActionBar().setTitle("API_Request");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+//        mtoolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(mtoolbar);
+//        mtoolbar.setTitle("AirtelApp");
+//        mtoolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+//        mtoolbar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                backToMain();
+//            }
+//        });
 
         Intent intent = new Intent(this, QueryService.class);
         startService(intent);
@@ -205,9 +208,9 @@ public class CreateUser extends AppCompatActivity {
         }
     };
 
-    private void backToMain() {
-        startActivity(new Intent(this, MainActivity.class));
-    }
+//    private void backToMain() {
+//        startActivity(new Intent(this, MainActivity.class));
+//    }
 
     //Setup the request source dropdown spinner
     private void setupDataValue() {
@@ -342,7 +345,7 @@ public class CreateUser extends AppCompatActivity {
         }
     }
 
-    public void registerReceiver(){
+    public void registerReceiver() {
         // Only register if not already registered
         if (!receiversRegistered) {
             registerReceiver(smsSentReceiver, new IntentFilter(SENT));
@@ -361,14 +364,40 @@ public class CreateUser extends AppCompatActivity {
             orderNumber.setText(intent.getStringExtra("mOrderId"));
             recipientNumber.setText(intent.getStringExtra("mPhoneNo"));
             dataBundleName.setText(intent.getStringExtra("mNetwork"));
-            dataBundleCost.setText(intent.getStringExtra("mQuantity"));
+//            dataBundleCost.setText(intent.getStringExtra("mQuantity"));
+
+            mDataBundleValue = getIntent().getStringExtra("mQuantity");
+            if (mDataBundleValue != null && mDataBundleValue.equals(getString(R.string.bundlevalue1))) {
+                spinnerValueRow.setSelection(1);
+            } else if (mDataBundleValue != null && mDataBundleValue.equals(getString(R.string.bundlevalue2))) {
+                spinnerValueRow.setSelection(2);
+            } else if (mDataBundleValue != null && mDataBundleValue.equals(getString(R.string.bundlevalue3))) {
+                spinnerValueRow.setSelection(3);
+            } else {
+                spinnerValueRow.setSelection(0);
+//                mDataBundleValue = DataEntry.BUNDLE_VALUE_UNKNOWN;
+//                spinnerRow.setSelection(0);
             }
+
+//            String bundleValue = getIntent().getStringExtra("mQuantity");
+//            if (bundleValue != null && bundleValue.equals(getString(R.string.bundlevalue1))) {
+//                spinnerValueRow.setSelection(1);
+//            } else if (bundleValue != null && bundleValue.equals(getString(R.string.bundlevalue2))) {
+//                spinnerValueRow.setSelection(2);
+//            } else if (bundleValue != null && bundleValue.equals(getString(R.string.bundlevalue3))) {
+//                spinnerValueRow.setSelection(3);
+//            } else {
+//                spinnerValueRow.setSelection(0);
+////                mDataBundleValue = DataEntry.BUNDLE_VALUE_UNKNOWN;
+////                spinnerRow.setSelection(0);
+//            }
+        }
 
         smsSentReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                switch (getResultCode()){
+                switch (getResultCode()) {
                     case android.app.Activity.RESULT_OK:
                         Toast.makeText(context, "SMS sent!", Toast.LENGTH_LONG).show();
                         break;
@@ -385,9 +414,9 @@ public class CreateUser extends AppCompatActivity {
                         Toast.makeText(context, "Null PDU!", Toast.LENGTH_LONG).show();
                         break;
 
-                        case SmsManager.RESULT_ERROR_RADIO_OFF:
-                            Toast.makeText(context, "Radio off!", Toast.LENGTH_LONG).show();
-                            break;
+                    case SmsManager.RESULT_ERROR_RADIO_OFF:
+                        Toast.makeText(context, "Radio off!", Toast.LENGTH_LONG).show();
+                        break;
                 }
             }
         };
@@ -396,7 +425,7 @@ public class CreateUser extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                switch (getResultCode()){
+                switch (getResultCode()) {
                     case android.app.Activity.RESULT_OK:
                         Toast.makeText(context, "SMS delivered!", Toast.LENGTH_LONG).show();
                         break;
@@ -414,12 +443,11 @@ public class CreateUser extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if(receiversRegistered ){
+        if (receiversRegistered) {
             unregisterReceiver(smsDeliveredReceiver);
             unregisterReceiver(smsSentReceiver);
             receiversRegistered = false;
-    }
-
+        }
     }
 
     private void emailMessage() {
@@ -434,7 +462,6 @@ public class CreateUser extends AppCompatActivity {
             Log.e("SendMail", e.getMessage(), e);
         }
     }
-
 
     private void airtelData() {
         if (mDataBundleValue.equals(ONE_FIVE_GB)) {

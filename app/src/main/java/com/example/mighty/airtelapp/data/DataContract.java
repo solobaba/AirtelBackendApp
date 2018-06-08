@@ -39,9 +39,9 @@ public class DataContract {
 
         //Data Bundle Value
         public static final String REQUEST_VALUE_UNKNOWN = "Unknown";
-        public static final String ONE_FIVE_GB = "1.5GB";
-        public static final String THREE_FIVE_GB = "3.5GB";
-        public static final String FIVE_GB = "5GB";
+        public static final String ONE_FIVE_GB = "1.5gb";
+        public static final String THREE_FIVE_GB = "3.5gb";
+        public static final String FIVE_GB = "5gb";
 
         //Data Cost price
         public static final String BUNDLE_VALUE_UNKNOWN = "Unknown";

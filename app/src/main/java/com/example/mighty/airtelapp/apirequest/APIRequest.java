@@ -1,14 +1,19 @@
 package com.example.mighty.airtelapp.apirequest;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.mighty.airtelapp.CreateUser;
@@ -18,6 +23,7 @@ import com.example.mighty.airtelapp.model.Feed;
 
 import java.util.ArrayList;
 
+import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,6 +31,25 @@ import retrofit2.Response;
 public class APIRequest extends AppCompatActivity{
 
     private static final String TAG = APIRequest.class.getSimpleName();
+
+    //ProgressBar
+    ProgressDialog progressDialog;
+    ProgressBar progressBar;
+//    RingProgressBar ringProgressBar1, ringProgressBar2;
+//    int progress = 0;
+//
+//    Handler myHandler = new Handler(){
+//        @Override
+//        public void handleMessage(Message msg) {
+//            if (msg.what == 0){
+//                if (progress<100){
+//                    progress++;
+//                    ringProgressBar1.setProgress(progress);
+//                    ringProgressBar2.setProgress(progress);
+//                }
+//            }
+//        }
+//    };
 
     Toolbar mtoolbar;
     Handler mHandler;
@@ -42,16 +67,27 @@ public class APIRequest extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_api_request);
 
-        mtoolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mtoolbar);
-        mtoolbar.setTitle("Request History");
-        mtoolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        mtoolbar.setOnClickListener (new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backToMain();
-            }
-        });
+        getSupportActionBar().setTitle("API_Request");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+//        mtoolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(mtoolbar);
+//        mtoolbar.setTitle("Request History");
+//        mtoolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+//        mtoolbar.setOnClickListener (new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                backToMain();
+//            }
+//        });
+
+
+        progressDialog = new ProgressDialog(APIRequest.this);
+        progressDialog.setTitle("Hello");
+        progressDialog.setMessage("Loading, please wait....");
+        progressDialog.show();
+
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         int columnNumbers = 3;
@@ -76,17 +112,43 @@ public class APIRequest extends AppCompatActivity{
 //        }
 //    };
 
-    private void backToMain() {
-        startActivity(new Intent(this, CreateUser.class));
-    }
+//    private void backToMain() {
+//        startActivity(new Intent(this, CreateUser.class));
+//    }
 
     public void clickApiItem(){
+
+//        ringProgressBar1 = (RingProgressBar) findViewById(R.id.progress_bar_1);
+//        ringProgressBar2 = (RingProgressBar) findViewById(R.id.progress_bar_2);
+//
+//        ringProgressBar2.setOnProgressListener(new RingProgressBar.OnProgressListener() {
+//            @Override
+//            public void progressToComplete() {
+//                Toast.makeText(APIRequest.this, "Completed!!!", Toast.LENGTH_LONG).show();
+//            }
+//        });
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                for (int i = 0; i < 100; i++){
+//                    try {
+//                        Thread.sleep(10);
+//                        myHandler.sendEmptyMessage(0);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }).start();
+
         apiInterface = APIClient.getAPIClient().create(APIInterface.class);
 
         Call<Feed> call = apiInterface.getData();
         call.enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(Call<Feed> call, Response<Feed> response) {
+                progressDialog.dismiss();
                 Log.i("api", "onResponse: Server Response: " + response.toString());
                 Log.i("api", "onResponse: Received information: " + response.body().toString());
 
@@ -112,5 +174,4 @@ public class APIRequest extends AppCompatActivity{
             }
         });
     }
-
 }

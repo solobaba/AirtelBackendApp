@@ -33,9 +33,9 @@
     <string name="spinnertype6">API</string>
 
     <!--Bundle value details… -->
-    <string name="bundlevalue1">1.5GB</string>
-    <string name="bundlevalue2">3.5GB</string>
-    <string name="bundlevalue3">5GB</string>
+    <string name="bundlevalue1">1.5gb</string>
+    <string name="bundlevalue2">3.5gb</string>
+    <string name="bundlevalue3">5gb</string>
 
     <!--Buttons details… -->
     <string name="send_data_button">Send Data</string>
