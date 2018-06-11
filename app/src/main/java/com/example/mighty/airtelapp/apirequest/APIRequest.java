@@ -32,24 +32,8 @@ public class APIRequest extends AppCompatActivity{
 
     private static final String TAG = APIRequest.class.getSimpleName();
 
-    //ProgressBar
+    //ProgressDialog
     ProgressDialog progressDialog;
-    ProgressBar progressBar;
-//    RingProgressBar ringProgressBar1, ringProgressBar2;
-//    int progress = 0;
-//
-//    Handler myHandler = new Handler(){
-//        @Override
-//        public void handleMessage(Message msg) {
-//            if (msg.what == 0){
-//                if (progress<100){
-//                    progress++;
-//                    ringProgressBar1.setProgress(progress);
-//                    ringProgressBar2.setProgress(progress);
-//                }
-//            }
-//        }
-//    };
 
     Toolbar mtoolbar;
     Handler mHandler;
@@ -67,7 +51,7 @@ public class APIRequest extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_api_request);
 
-        getSupportActionBar().setTitle("API_Request");
+        getSupportActionBar().setTitle("API Request");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -117,31 +101,6 @@ public class APIRequest extends AppCompatActivity{
 //    }
 
     public void clickApiItem(){
-
-//        ringProgressBar1 = (RingProgressBar) findViewById(R.id.progress_bar_1);
-//        ringProgressBar2 = (RingProgressBar) findViewById(R.id.progress_bar_2);
-//
-//        ringProgressBar2.setOnProgressListener(new RingProgressBar.OnProgressListener() {
-//            @Override
-//            public void progressToComplete() {
-//                Toast.makeText(APIRequest.this, "Completed!!!", Toast.LENGTH_LONG).show();
-//            }
-//        });
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                for (int i = 0; i < 100; i++){
-//                    try {
-//                        Thread.sleep(10);
-//                        myHandler.sendEmptyMessage(0);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }).start();
-
         apiInterface = APIClient.getAPIClient().create(APIInterface.class);
 
         Call<Feed> call = apiInterface.getData();

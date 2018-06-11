@@ -14,6 +14,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -70,10 +71,10 @@ public class CreateUser extends AppCompatActivity {
     Button button, dataButton;
 
     //Airtel data codes
-    public static final String ONE_FIVE_GB = "1.5GB";
-    public static final String THREE_FIVE_GB = "3.5GB";
-    public static final String FIVE_GB = "5GB";
-    public static final String CODE_ONE_FIVE_GB = "*141**5*2*1*5";
+    public static final String ONE_FIVE_GB = "1.5gb";
+    public static final String THREE_FIVE_GB = "3.5gb";
+    public static final String FIVE_GB = "5gb";
+    public static final String CODE_ONE_FIVE_GB = "*141**5*2*1*5*1";
     public static final String CODE_THREE_FIVE_GB = "*141**5*2*1*4*1";
     public static final String CODE_FIVE_GB = "*141**5*2*1*3*1";
 
@@ -114,7 +115,7 @@ public class CreateUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_user);
 
-        getSupportActionBar().setTitle("API_Request");
+        getSupportActionBar().setTitle("Create User");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 //        mtoolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -360,37 +361,40 @@ public class CreateUser extends AppCompatActivity {
         super.onResume();
 
         Intent intent = getIntent();
+
+        spinnerRow.setSelection(2);
+
         if (intent != null) {
             orderNumber.setText(intent.getStringExtra("mOrderId"));
             recipientNumber.setText(intent.getStringExtra("mPhoneNo"));
             dataBundleName.setText(intent.getStringExtra("mNetwork"));
 //            dataBundleCost.setText(intent.getStringExtra("mQuantity"));
 
-            mDataBundleValue = getIntent().getStringExtra("mQuantity");
-            if (mDataBundleValue != null && mDataBundleValue.equals(getString(R.string.bundlevalue1))) {
-                spinnerValueRow.setSelection(1);
-            } else if (mDataBundleValue != null && mDataBundleValue.equals(getString(R.string.bundlevalue2))) {
-                spinnerValueRow.setSelection(2);
-            } else if (mDataBundleValue != null && mDataBundleValue.equals(getString(R.string.bundlevalue3))) {
-                spinnerValueRow.setSelection(3);
-            } else {
-                spinnerValueRow.setSelection(0);
-//                mDataBundleValue = DataEntry.BUNDLE_VALUE_UNKNOWN;
-//                spinnerRow.setSelection(0);
-            }
-
-//            String bundleValue = getIntent().getStringExtra("mQuantity");
-//            if (bundleValue != null && bundleValue.equals(getString(R.string.bundlevalue1))) {
+//            mDataBundleValue = getIntent().getStringExtra("mQuantity");
+//            if (mDataBundleValue != null && mDataBundleValue.equals(getString(R.string.bundlevalue1))) {
 //                spinnerValueRow.setSelection(1);
-//            } else if (bundleValue != null && bundleValue.equals(getString(R.string.bundlevalue2))) {
+//            } else if (mDataBundleValue != null && mDataBundleValue.equals(getString(R.string.bundlevalue2))) {
 //                spinnerValueRow.setSelection(2);
-//            } else if (bundleValue != null && bundleValue.equals(getString(R.string.bundlevalue3))) {
+//            } else if (mDataBundleValue != null && mDataBundleValue.equals(getString(R.string.bundlevalue3))) {
 //                spinnerValueRow.setSelection(3);
 //            } else {
 //                spinnerValueRow.setSelection(0);
 ////                mDataBundleValue = DataEntry.BUNDLE_VALUE_UNKNOWN;
-////                spinnerRow.setSelection(0);
+//                spinnerRow.setSelection(0);
 //            }
+
+            String bundleValue = getIntent().getStringExtra("mQuantity");
+            if (bundleValue != null && bundleValue.equals(getString(R.string.bundlevalue1))) {
+                spinnerValueRow.setSelection(0);
+            } else if (bundleValue != null && bundleValue.equals(getString(R.string.bundlevalue2))) {
+                spinnerValueRow.setSelection(1);
+            } else if (bundleValue != null && bundleValue.equals(getString(R.string.bundlevalue3))) {
+                spinnerValueRow.setSelection(2);
+            } else {
+                spinnerValueRow.setSelection(0);
+//                mDataBundleValue = DataEntry.BUNDLE_VALUE_UNKNOWN;
+                spinnerRow.setSelection(0);
+            }
         }
 
         smsSentReceiver = new BroadcastReceiver() {
@@ -453,7 +457,8 @@ public class CreateUser extends AppCompatActivity {
     private void emailMessage() {
         String email = "interactivemighty@gmail.com";
         String subject = "Mighty Data Notification";
-        String message = "Be Mighty! You received " + mDataBundleValue + " airtime from Mighty Interactive Limited. " + "\nKindly dial *461*2# to check your balance. Thank you!";
+        String message = "Be Mighty! You received " + mDataBundleValue + " airtime from Mighty Interactive Limited. " +
+                "\nKindly dial *461*2# to check your balance. Thank you!";
 
         try {
             EmailMessage emailMsg = new EmailMessage(this, email, subject, message);
@@ -464,18 +469,19 @@ public class CreateUser extends AppCompatActivity {
     }
 
     private void airtelData() {
-        if (mDataBundleValue.equals(ONE_FIVE_GB)) {
-            String ussdCode = CODE_ONE_FIVE_GB + recNum + Uri.encode("#");
+        if (mDataBundleValue.equals(getString(R.string.bundlevalue1))) {
+            String ussdCode = DataEntry.ONE_FIVE_GB_CODE + recipientNumber + Uri.encode("#");
             startActivity(new Intent("android.intent.action.CALL", Uri.parse("tel:" + ussdCode)));
         } else if (mDataBundleValue.equals(THREE_FIVE_GB)) {
-            String ussdCode = CODE_THREE_FIVE_GB + recNum + Uri.encode("#");
-            startActivity(new Intent("android.intent.action.CALL", Uri.parse("tel:" + ussdCode)));
-        } else if (mDataBundleValue.equals(FIVE_GB)) {
-            String ussdCode = CODE_FIVE_GB + recNum + Uri.encode("#");
+            String ussdCode = CODE_THREE_FIVE_GB + recipientNumber + Uri.encode("#");
             startActivity(new Intent("android.intent.action.CALL", Uri.parse("tel:" + ussdCode)));
         } else {
-            mDataBundleValue = DataEntry.REQUEST_VALUE_UNKNOWN;
+            String ussdCode = CODE_FIVE_GB + recipientNumber + Uri.encode("#");
+            startActivity(new Intent("android.intent.action.CALL", Uri.parse("tel:" + ussdCode)));
         }
+//        else {
+//            mDataBundleValue = DataEntry.REQUEST_VALUE_UNKNOWN;
+//        }
     }
 
     private void dialogBox() {
@@ -497,9 +503,10 @@ public class CreateUser extends AppCompatActivity {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.drawable.message);
         builder.setContentTitle("Mighty notifiction");
-        builder.setContentText(mResult);
+        builder.setContentText("Data sent successfully! Thank you");
         builder.setDefaults(Notification.DEFAULT_VIBRATE);
         builder.setAutoCancel(true);
+        builder.setColor(Color.RED);
         Intent intent = new Intent(this, MainActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addParentStack(NotificationClass.class);
@@ -507,7 +514,7 @@ public class CreateUser extends AppCompatActivity {
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(0, builder.build());
+        nm.notify(1, builder.build());
 
         MediaPlayer mySound = MediaPlayer.create(this, R.raw.notification);
         mySound.start();
@@ -570,7 +577,7 @@ public class CreateUser extends AppCompatActivity {
 //    }
 
     private void trackBalance() {
-        double balanceThreshold = 3000;
+        double balanceThreshold = 4000;
         String mDataBalance = "MainA/C:N3984.75;8x Voice";
         String currentBalSubString = mDataBalance.substring(9, 16);
         double topUpData = Double.parseDouble(currentBalSubString);
@@ -579,7 +586,7 @@ public class CreateUser extends AppCompatActivity {
             Log.i("trackBalance", "Top up your data balance please....");
             //speak("Top up your data please, your account is getting low");
         } else if (topUpData >= balanceThreshold) {
-            Toast.makeText(this, "Chilled...you have enough data to play. Enjoy!!!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Chilled...you have enough data to play with. Enjoy!!!", Toast.LENGTH_LONG).show();
         }
         balanceNotification();
         Log.i("subString", currentBalSubString);
@@ -593,6 +600,7 @@ public class CreateUser extends AppCompatActivity {
         builder.setDefaults(Notification.DEFAULT_VIBRATE);
         builder.setDefaults(Notification.DEFAULT_SOUND);
         builder.setAutoCancel(true);
+        builder.setColor(Color.BLUE);
         Intent intent = new Intent(this, MainActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addParentStack(NotificationClass.class);
@@ -600,7 +608,7 @@ public class CreateUser extends AppCompatActivity {
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(0, builder.build());
+        nm.notify(2, builder.build());
     }
 
     //Received data on clickItem from API request

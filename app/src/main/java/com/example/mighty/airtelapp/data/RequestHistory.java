@@ -34,7 +34,7 @@ public class RequestHistory extends AppCompatActivity implements LoaderManager.L
         super.onCreate(savedInstanceState);
         setContentView(R.layout.request_activity);
 
-        getSupportActionBar().setTitle("API_Request");
+        getSupportActionBar().setTitle("Database History");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 //        mtoolbar = (Toolbar) findViewById(R.id.toolbar);
