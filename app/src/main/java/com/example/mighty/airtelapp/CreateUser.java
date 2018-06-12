@@ -20,7 +20,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -42,6 +41,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mighty.airtelapp.apirequest.APIClient;
+import com.example.mighty.airtelapp.apirequest.APIInterface;
 import com.example.mighty.airtelapp.apirequest.APIRequest;
 import com.example.mighty.airtelapp.service.EmailMessage;
 import com.example.mighty.airtelapp.service.NotificationClass;
@@ -56,6 +57,12 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.example.mighty.airtelapp.model.RequestBody;
+import com.example.mighty.airtelapp.model.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CreateUser extends AppCompatActivity {
 
 //    public static final String ACTION_REFRESHING_REMINDER = "refreshing_reminder";
@@ -69,14 +76,6 @@ public class CreateUser extends AppCompatActivity {
     EditText orderNumber, recipientNumber, dataBundleName, dataBundleCost;
     Spinner spinnerRow, spinnerValueRow;
     Button button, dataButton;
-
-    //Airtel data codes
-    public static final String ONE_FIVE_GB = "1.5gb";
-    public static final String THREE_FIVE_GB = "3.5gb";
-    public static final String FIVE_GB = "5gb";
-    public static final String CODE_ONE_FIVE_GB = "*141**5*2*1*5*1";
-    public static final String CODE_THREE_FIVE_GB = "*141**5*2*1*4*1";
-    public static final String CODE_FIVE_GB = "*141**5*2*1*3*1";
 
     String ordNum, recNum, dataName, dataCost;
 
@@ -111,7 +110,7 @@ public class CreateUser extends AppCompatActivity {
     };
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_user);
 
@@ -326,13 +325,14 @@ public class CreateUser extends AppCompatActivity {
 //            Toast.makeText(this, "Data sent with row id: " + newRowId, Toast.LENGTH_SHORT).show();
 //        }
 
-        airtelData();
+//        airtelData();
         String message = "Be Mighty! You received " + mDataBundleValue + " " + dataName + " from Mighty Interactive Limited. " + "Kindly dial *461*2# to check your balance. Thank you!";
         String phoneNumber = recNum;
-        sendSMS(phoneNumber, message);
-        emailMessage();
+//        sendSMS(phoneNumber, message);
+//        emailMessage();
         showNotification();
         dialogBox();
+        apiPost();
     }
 
     private void sendSMS(String phoneNumber, String message) {
@@ -369,19 +369,6 @@ public class CreateUser extends AppCompatActivity {
             recipientNumber.setText(intent.getStringExtra("mPhoneNo"));
             dataBundleName.setText(intent.getStringExtra("mNetwork"));
 //            dataBundleCost.setText(intent.getStringExtra("mQuantity"));
-
-//            mDataBundleValue = getIntent().getStringExtra("mQuantity");
-//            if (mDataBundleValue != null && mDataBundleValue.equals(getString(R.string.bundlevalue1))) {
-//                spinnerValueRow.setSelection(1);
-//            } else if (mDataBundleValue != null && mDataBundleValue.equals(getString(R.string.bundlevalue2))) {
-//                spinnerValueRow.setSelection(2);
-//            } else if (mDataBundleValue != null && mDataBundleValue.equals(getString(R.string.bundlevalue3))) {
-//                spinnerValueRow.setSelection(3);
-//            } else {
-//                spinnerValueRow.setSelection(0);
-////                mDataBundleValue = DataEntry.BUNDLE_VALUE_UNKNOWN;
-//                spinnerRow.setSelection(0);
-//            }
 
             String bundleValue = getIntent().getStringExtra("mQuantity");
             if (bundleValue != null && bundleValue.equals(getString(R.string.bundlevalue1))) {
@@ -459,7 +446,6 @@ public class CreateUser extends AppCompatActivity {
         String subject = "Mighty Data Notification";
         String message = "Be Mighty! You received " + mDataBundleValue + " airtime from Mighty Interactive Limited. " +
                 "\nKindly dial *461*2# to check your balance. Thank you!";
-
         try {
             EmailMessage emailMsg = new EmailMessage(this, email, subject, message);
             emailMsg.execute();
@@ -470,18 +456,17 @@ public class CreateUser extends AppCompatActivity {
 
     private void airtelData() {
         if (mDataBundleValue.equals(getString(R.string.bundlevalue1))) {
-            String ussdCode = DataEntry.ONE_FIVE_GB_CODE + recipientNumber + Uri.encode("#");
+            String ussdCode = "*" + DataEntry.ONE_FIVE_GB_CODE + recNum + Uri.encode("#");
             startActivity(new Intent("android.intent.action.CALL", Uri.parse("tel:" + ussdCode)));
-        } else if (mDataBundleValue.equals(THREE_FIVE_GB)) {
-            String ussdCode = CODE_THREE_FIVE_GB + recipientNumber + Uri.encode("#");
+        } else if (mDataBundleValue.equals(getString(R.string.bundlevalue2))) {
+            String ussdCode = "*" + DataEntry.THREE_FIVE_GB_CODE + recNum + Uri.encode("#");
+            startActivity(new Intent("android.intent.action.CALL", Uri.parse("tel:" + ussdCode)));
+        } else if (mDataBundleValue.equals(getString(R.string.bundlevalue3))){
+            String ussdCode = "*" + DataEntry.FIVE_GB_CODE + recNum + Uri.encode("#");
             startActivity(new Intent("android.intent.action.CALL", Uri.parse("tel:" + ussdCode)));
         } else {
-            String ussdCode = CODE_FIVE_GB + recipientNumber + Uri.encode("#");
-            startActivity(new Intent("android.intent.action.CALL", Uri.parse("tel:" + ussdCode)));
+            mDataBundleValue = DataEntry.REQUEST_VALUE_UNKNOWN;
         }
-//        else {
-//            mDataBundleValue = DataEntry.REQUEST_VALUE_UNKNOWN;
-//        }
     }
 
     private void dialogBox() {
@@ -596,7 +581,7 @@ public class CreateUser extends AppCompatActivity {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.drawable.message);
         builder.setContentTitle("Mighty notifiction");
-        builder.setContentText("Top up your data balance please");
+        builder.setContentText("Check your balance please");
         builder.setDefaults(Notification.DEFAULT_VIBRATE);
         builder.setDefaults(Notification.DEFAULT_SOUND);
         builder.setAutoCancel(true);
@@ -609,6 +594,35 @@ public class CreateUser extends AppCompatActivity {
         builder.setContentIntent(pendingIntent);
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.notify(2, builder.build());
+    }
+
+    public void apiPost(){
+        APIInterface apiInterface = APIClient.getAPIClient().create(APIInterface.class);
+
+        RequestBody requestBody = new RequestBody();
+        requestBody.setStatus("success");
+        requestBody.setStatusCode(1);
+
+        Call<ResponseBody> responseBodyCall = apiInterface.postToken(requestBody);
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                int statusCode = response.code();
+                ResponseBody responseBody = response.body();
+
+                Log.i("postRequestBody:", "API Post sent successfully" + statusCode);
+                if (responseBody != null) {
+                    Log.d("postResponseBody", "API post sent successfully" + responseBody.toString());
+                }
+                Toast.makeText(CreateUser.this, "API Post sent successfully", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i("onFailure:", "Error sending API post" + t.getMessage());
+                Toast.makeText(CreateUser.this, "Error sending API Post", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     //Received data on clickItem from API request
@@ -629,7 +643,6 @@ public class CreateUser extends AppCompatActivity {
     public void dataBalance() {
         String ussdCode = "*" + AIRTEL_CODE_BUTTON + Uri.encode("#");
         startActivity(new Intent("android.intent.action.CALL", Uri.parse("tel:" + ussdCode)));
-//        startHandlerThread();
     }
 
     //Check balance

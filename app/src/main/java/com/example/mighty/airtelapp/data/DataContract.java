@@ -50,8 +50,8 @@ public class DataContract {
         public static final String FIVE_GB_PRICE = "#4500";
 
         //Airtel data codes
-        public static final String ONE_FIVE_GB_CODE = "*141**5*2*1*5*1*";
-        public static final String THREE_FIVE_GB_CODE = "*141**5*2*1*4*1";
-        public static final String FIVE_GB_CODE = "*141**5*2*1*3*1";
+        public static final String ONE_FIVE_GB_CODE = "141**5*2*1*5*1";
+        public static final String THREE_FIVE_GB_CODE = "141**5*2*1*4*1";
+        public static final String FIVE_GB_CODE = "141**5*2*1*3*1";
     }
 }

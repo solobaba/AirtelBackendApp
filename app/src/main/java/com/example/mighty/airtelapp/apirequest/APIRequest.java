@@ -33,7 +33,7 @@ public class APIRequest extends AppCompatActivity{
     private static final String TAG = APIRequest.class.getSimpleName();
 
     //ProgressDialog
-    ProgressDialog progressDialog;
+    ProgressDialog pDialog;
 
     Toolbar mtoolbar;
     Handler mHandler;
@@ -67,10 +67,10 @@ public class APIRequest extends AppCompatActivity{
 //        });
 
 
-        progressDialog = new ProgressDialog(APIRequest.this);
-        progressDialog.setTitle("Hello");
-        progressDialog.setMessage("Loading, please wait....");
-        progressDialog.show();
+        pDialog = new ProgressDialog(APIRequest.this);
+        pDialog.setTitle("Hello");
+        pDialog.setMessage("Loading, please wait....");
+        pDialog.show();
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -107,7 +107,7 @@ public class APIRequest extends AppCompatActivity{
         call.enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(Call<Feed> call, Response<Feed> response) {
-                progressDialog.dismiss();
+                pDialog.dismiss();
                 Log.i("api", "onResponse: Server Response: " + response.toString());
                 Log.i("api", "onResponse: Received information: " + response.body().toString());
 
