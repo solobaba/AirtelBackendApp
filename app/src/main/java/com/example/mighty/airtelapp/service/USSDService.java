@@ -17,7 +17,6 @@ public class USSDService extends AccessibilityService {
 //import android.support.annotation.RequiresApi;
 
     public static String TAG = USSDService.class.getSimpleName();
-    private static final int uniqueID = 100;
     String text;
 
     //@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

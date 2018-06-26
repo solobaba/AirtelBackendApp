@@ -15,6 +15,21 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/day_report"
+        android:title="@string/day_report"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/shift_report"
+        android:title="@string/shift_report"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/date_pick"
+        android:title="@string/date_pick"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/check_balance_request"
         android:title="@string/check_balance_request"
         app:showAsAction="never" />
@@ -23,11 +38,5 @@
         android:id="@+id/contact_network"
         android:title="@string/contact_network"
         app:showAsAction="never" />
-
-    <!--<item-->
-        <!--android:id="@+id/back_arrow"-->
-        <!--android:title="Backarrow"-->
-        <!--android:icon="@drawable/backarrow"-->
-        <!--app:showAsAction="always" />-->
 
 </menu>

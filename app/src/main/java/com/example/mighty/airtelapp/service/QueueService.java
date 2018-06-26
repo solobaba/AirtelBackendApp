@@ -6,15 +6,15 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-public class QueryService extends IntentService {
+public class QueueService extends IntentService {
 
     public static final String PARAM_IN_MSG = "imsg";
     private static final String TAG = "com.example.mighty.airtelapp";
 
     //Creates an IntentService.  Invoked by your subclass's constructor.
-    //@param QueryService Used to name the worker thread, important only for debugging.
-    public QueryService() {
-        super("QueryService");
+    //@param QueueService Used to name the worker thread, important only for debugging.
+    public QueueService() {
+        super("QueueService");
     }
 
     @Override

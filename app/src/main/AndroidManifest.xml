@@ -40,6 +40,14 @@
             android:parentActivityName=".CreateUser"/>
         <activity android:name=".apirequest.APIRequest"
             android:parentActivityName=".CreateUser"/>
+        <activity android:name=".admintask.DatePickActivity"
+            android:parentActivityName=".CreateUser"/>
+        <activity android:name=".admintask.DayReportActivity"
+            android:parentActivityName=".CreateUser"/>
+        <activity android:name=".admintask.DayPickActivity"
+            android:parentActivityName=".CreateUser"/>
+        <activity android:name=".admintask.ShiftOperationActivity"
+            android:parentActivityName=".CreateUser"/>
 
         <provider
             android:authorities="com.example.mighty.airtelapp"
@@ -55,7 +63,7 @@
                 android:resource="@xml/config_service" />
         </service>
 
-        <service android:name=".service.QueryService"
+        <service android:name=".service.QueueService"
             android:exported="false"/>
 
         <receiver android:name=".CreateUser$Receiver"

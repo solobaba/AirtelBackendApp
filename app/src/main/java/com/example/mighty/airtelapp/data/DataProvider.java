@@ -23,11 +23,35 @@ public class DataProvider extends ContentProvider{
     //Uri matcher code content of URI for a single data in the data table
     private static final int LOG_ID = 101;
 
+    //Uri matcher code content of URI for day shift operation
+    public static final int SHIFT_DAY = 102;
+
+    //Uri matcher code content of URI for night shift operation
+    public static final int SHIFT_NIGHT = 103;
+
+    //Uri matcher code content of URI for daily operation
+    public static final int DAILY_OPERATION = 104;
+
+    //Uri matcher code content of URI for daily operation date picker
+    public static final int DAILY_DATE_PICKER_OPERATION = 105;
+
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
         //Uri matcher for logs
         uriMatcher.addURI(DataContract.CONTENT_AUTHORITY, DataContract.PATH_LOG, LOGS);
         uriMatcher.addURI(DataContract.CONTENT_AUTHORITY, DataContract.PATH_LOG + "/#", LOG_ID);
+
+        //URI matcher for day shift operation
+        uriMatcher.addURI(DataContract.CONTENT_AUTHORITY, DataContract.PATH_OPERATION + "/#", SHIFT_DAY);
+
+        //URI matcher for night shift operation
+        uriMatcher.addURI(DataContract.CONTENT_AUTHORITY, DataContract.PATH_OPERATION + "/#", SHIFT_NIGHT);
+
+        //URI matcher for daily operation
+        uriMatcher.addURI(DataContract.CONTENT_AUTHORITY, DataContract.PATH_DAILY_OPERATION + "/#", DAILY_OPERATION);
+
+        //URI matcher for daily operation date picker
+        uriMatcher.addURI(DataContract.CONTENT_AUTHORITY, DataContract.PATH_OPERATION + "/#", DAILY_DATE_PICKER_OPERATION);
     }
 
     //Database helper object
@@ -77,6 +101,27 @@ public class DataProvider extends ContentProvider{
                 cursor = db.query(DataEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
+
+            case SHIFT_DAY:
+                cursor = db.query(DataEntry.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
+
+            case SHIFT_NIGHT:
+                cursor = db.query(DataEntry.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
+
+            case DAILY_OPERATION:
+                cursor = db.query(DataEntry.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
+
+            case DAILY_DATE_PICKER_OPERATION:
+                cursor = db.query(DataEntry.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
+
                 default:
                     throw new IllegalArgumentException ("Cannot query unknown URI " + uri);
         }

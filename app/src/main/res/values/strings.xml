@@ -46,6 +46,9 @@
     <string name="check_balance_request">Check Balance Request</string>
     <string name="log_data">API Request Log</string>
     <string name="contact_network">Contact Network</string>
+    <string name="date_pick">Date Pick</string>
+    <string name="day_report">Day Report</string>
+    <string name="shift_report">Shift Report</string>
 
     <!--notification message-->
     <string name="notification_msg">Be Mighty!, You received 1.5GB from Mighty Interactive Limited.
@@ -55,5 +58,17 @@
     <string name="overview">Overview</string>
     <string name="data_value">Bundle Value</string>
     <string name="data_cost">Bundle Cost</string>
+
+    <!-- Day Pick -->
+    <string name="shift_sales_summary">Shift Sales Summary</string>
+    <string name="sales_summary">Sales Summary</string>
+    <string name="opening_balance">Opening Balance</string>
+    <string name="closing_balance">Close Balance</string>
+    <string name="total_sales">Total Sales</string>
+    <string name="date">Date</string>
+    <string name="date_selected">25/06/2018</string>
+    <string name="date_picker">Date Picker</string>
+    <string name="view">View</string>
+    <string name="sales_list">Sales List</string>
 
 </resources>

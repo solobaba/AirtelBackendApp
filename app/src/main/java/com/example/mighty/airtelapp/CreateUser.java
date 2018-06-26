@@ -1,6 +1,7 @@
 package com.example.mighty.airtelapp;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -41,31 +42,33 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mighty.airtelapp.admintask.DatePickActivity;
+import com.example.mighty.airtelapp.admintask.DayReportActivity;
+import com.example.mighty.airtelapp.admintask.ShiftOperationActivity;
 import com.example.mighty.airtelapp.apirequest.APIClient;
 import com.example.mighty.airtelapp.apirequest.APIInterface;
 import com.example.mighty.airtelapp.apirequest.APIRequest;
 import com.example.mighty.airtelapp.service.EmailMessage;
 import com.example.mighty.airtelapp.service.NotificationClass;
-import com.example.mighty.airtelapp.service.QueryService;
+import com.example.mighty.airtelapp.service.QueueService;
 import com.example.mighty.airtelapp.data.DataContract.DataEntry;
 import com.example.mighty.airtelapp.data.DataDbHelper;
 import com.example.mighty.airtelapp.data.RequestHistory;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.example.mighty.airtelapp.model.RequestBody;
 import com.example.mighty.airtelapp.model.ResponseBody;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CreateUser extends AppCompatActivity {
-
-//    public static final String ACTION_REFRESHING_REMINDER = "refreshing_reminder";
 
     Toolbar mtoolbar;
 
@@ -87,7 +90,13 @@ public class CreateUser extends AppCompatActivity {
 
     DataDbHelper mDbHelper;
     DateFormat dateFormat;
-    Date date;
+    public static String date;
+    public static int mTime;
+    public static int tm;
+    String time;
+    Calendar calendar;
+
+    int shiftOperation;
 
     private Receiver receiver;
     private boolean receiversRegistered;
@@ -109,6 +118,7 @@ public class CreateUser extends AppCompatActivity {
         }
     };
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,7 +138,7 @@ public class CreateUser extends AppCompatActivity {
 //            }
 //        });
 
-        Intent intent = new Intent(this, QueryService.class);
+        Intent intent = new Intent(this, QueueService.class);
         startService(intent);
 
         IntentFilter filter = new IntentFilter(Receiver.ACTION_RESPONSE);
@@ -138,7 +148,8 @@ public class CreateUser extends AppCompatActivity {
 
         mDbHelper = new DataDbHelper(this);
         dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        date = new Date();
+//        time = dateFormat.format(calendar.getTime());
+        date = new String();
 
         orderNumber = findViewById(R.id.order_number);
         recipientNumber = findViewById(R.id.recipient_number);
@@ -285,7 +296,7 @@ public class CreateUser extends AppCompatActivity {
         String dataName = dataBundleName.getText().toString().trim();
         String mDataBundleValue = spinnerValueRow.getSelectedItem().toString();
         String dataCost = dataBundleCost.getText().toString().trim();
-        String mRequestSource = spinnerRow.getSelectedItem().toString();
+        String mRequestSource = spinnerRow.getSelectedItem().toString();;
 
         // Create an object of database in write mode
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -302,6 +313,7 @@ public class CreateUser extends AppCompatActivity {
         contentValues.put(DataEntry.COLUMN_SPINNER_ROW, mRequestSource);
         contentValues.put(DataEntry.COLUMN_STATUS, "Data saved successfully");
         contentValues.put(DataEntry.COLUMN_TIME_DONE, dateFormat.format(date));
+        contentValues.put(DataEntry.COLUMN_SHIFT_OPERATION, String.valueOf(shiftOperation));
 
         Uri newRowId = getContentResolver().insert(DataEntry.CONTENT_URI, contentValues);
 //        Uri uri = getContentResolver().insert(DataEntry.CONTENT_URI, contentValues);
@@ -325,11 +337,12 @@ public class CreateUser extends AppCompatActivity {
 //            Toast.makeText(this, "Data sent with row id: " + newRowId, Toast.LENGTH_SHORT).show();
 //        }
 
-//        airtelData();
+        airtelData();
+        shiftOperation();
         String message = "Be Mighty! You received " + mDataBundleValue + " " + dataName + " from Mighty Interactive Limited. " + "Kindly dial *461*2# to check your balance. Thank you!";
         String phoneNumber = recNum;
 //        sendSMS(phoneNumber, message);
-//        emailMessage();
+        emailMessage();
         showNotification();
         dialogBox();
         apiPost();
@@ -362,7 +375,7 @@ public class CreateUser extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        spinnerRow.setSelection(2);
+        spinnerRow.setSelection(5);
 
         if (intent != null) {
             orderNumber.setText(intent.getStringExtra("mOrderId"));
@@ -519,7 +532,7 @@ public class CreateUser extends AppCompatActivity {
 
                 //Regex method for extracting balance airtime
                 String balance = mResult;
-                Pattern pattern = Pattern.compile(":(.*?)G");
+                Pattern pattern = Pattern.compile(":(.*)G");
                 Matcher match = pattern.matcher(balance);
 
                 if (match.find()) {
@@ -545,21 +558,6 @@ public class CreateUser extends AppCompatActivity {
             }
         }
     }
-
-//    public class ReminderTasks{
-//        public static final String ACTION_REFRESHING_REMINDER = "refreshing_reminder";
-//
-//        public void executeTask(Context context, String action) {
-//            if (ACTION_REFRESHING_REMINDER.equals(action)){
-//                issueRefreshingReminder(context);
-//            }
-//        }
-//
-//        private void issueRefreshingReminder(Context context) {
-//            PreferenceUtilities.incrementRefreshingReminder(context);
-//            NotificationUtils.remindUser(context);
-//        }
-//    }
 
     private void trackBalance() {
         double balanceThreshold = 4000;
@@ -639,6 +637,19 @@ public class CreateUser extends AppCompatActivity {
 //        }
 //    }
 
+    //Shift operation method
+    public void shiftOperation(){
+        mTime = Integer.parseInt(time);
+        tm = 12;
+
+        if (mTime < tm){
+            shiftOperation = DataEntry.DAY_SHIFT;
+        }else{
+            shiftOperation = DataEntry.NIGHT_SHIFT;
+        }
+
+    }
+
     //Check balance
     public void dataBalance() {
         String ussdCode = "*" + AIRTEL_CODE_BUTTON + Uri.encode("#");
@@ -686,6 +697,18 @@ public class CreateUser extends AppCompatActivity {
             case R.id.log_data:
                 startActivity(new Intent(CreateUser.this, APIRequest.class));
                 Toast.makeText(this, "Fetching data", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.day_report:
+                startActivity(new Intent(CreateUser.this, DayReportActivity.class));
+                return true;
+
+            case R.id.shift_report:
+                startActivity(new Intent(CreateUser.this, ShiftOperationActivity.class));
+                return true;
+
+            case R.id.date_pick:
+                startActivity(new Intent(CreateUser.this, DatePickActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);

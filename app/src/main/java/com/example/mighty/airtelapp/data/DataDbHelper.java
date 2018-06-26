@@ -9,7 +9,7 @@ import com.example.mighty.airtelapp.data.DataContract.DataEntry;
 public class DataDbHelper extends SQLiteOpenHelper {
 
     //Database name
-    private static final String DATABASE_NAME = "delta.db";
+    private static final String DATABASE_NAME = "sheltery.db";
 
     // Database version
     private static final int DATABASE_VERSION = 3;
@@ -21,7 +21,7 @@ public class DataDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String SQL_CREATE_DATAIR_TABLE = "CREATE TABLE " + DataEntry.TABLE_NAME + "("+
+        String SQL_CREATE_RIGHTDATA_TABLE = "CREATE TABLE " + DataEntry.TABLE_NAME + "("+
                 DataEntry.COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
                 DataEntry.COLUMN_ORDER_NUMBER + " TEXT , " +
                 DataEntry.COLUMN_RECIPIENT_NUMBER + " TEXT, " +
@@ -31,13 +31,15 @@ public class DataDbHelper extends SQLiteOpenHelper {
                 DataEntry.COLUMN_SPINNER_ROW + " TEXT, " +
                 DataEntry.COLUMN_TIME_RECEIVED + " NUMERIC, " +
                 DataEntry.COLUMN_STATUS + " TEXT, " +
-                DataEntry.COLUMN_TIME_DONE + " NUMERIC " + ");";
-        db.execSQL(SQL_CREATE_DATAIR_TABLE);
+                DataEntry.COLUMN_TIME_DONE + " NUMERIC, " +
+                DataEntry.COLUMN_DATE + " TEXT, " +
+                DataEntry.COLUMN_SHIFT_OPERATION + " INTEGER " + ");";
+        db.execSQL(SQL_CREATE_RIGHTDATA_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        db.execSQL("DROP TABLE IF EXISTS " + DataEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DataEntry.TABLE_NAME);
 //        onCreate(db);
     }
 
